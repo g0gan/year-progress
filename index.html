@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогресс года</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        #progress-bar {
+            height: 50px;
+            background-color: #76c7c0;
+            width: 1;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Year progress in realtime</h1>
+<p id="current-time"></p>
+<div id="progress-container">
+    <div id="progress-bar"></div>
+</div>
+<p id="percentage"></p>
+
+<script>
+    function updateProgress() {
+        const now = new Date();
+        const startOfYear = new Date(now.getFullYear(), 0, 1);
+        const endOfYear = new Date(now.getFullYear() + 1, 0, 1);
+        
+        const totalMilliseconds = endOfYear - startOfYear;
+        const elapsedMilliseconds = now - startOfYear;
+
+        const percentage = (elapsedMilliseconds / totalMilliseconds) * 100;
+
+        document.getElementById('progress-bar').style.width = percentage + '%';
+        document.getElementById('percentage').innerText = Math.round(percentage) + '%';
+        document.getElementById('current-time').innerText = now.toLocaleString();
+    }
+
+    setInterval(updateProgress, 1000);
+    updateProgress(); // Initial call to set the progress immediately
+</script>
+
+</body>
+</html>
